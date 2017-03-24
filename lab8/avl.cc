@@ -188,11 +188,23 @@ void balance( Node *& x ) {
 	} else{
 		//check if it is the right child that is null 
 		if(rightChild == NULL && x->height > 1){
-			
+			if(leftChild->right == NULL){
+				//case LL
+				rotateRight(x);
+			} else {
+				//case LR
+				doubleRotateRight(x);
+			}
 
 			//check if it is the right child that is null
 		} else if(leftChild == NULL && x->height > 1) {
-
+			if(rightChild->right == NULL){
+				//case RL
+				doubleRotateLeft(x);
+			} else {
+				//case RR
+				doubleRotateLeft(x);
+			}
 			//
 		} else{
 			//the tree is balanced
