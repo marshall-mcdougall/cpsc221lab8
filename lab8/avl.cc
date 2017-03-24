@@ -174,14 +174,28 @@ void balance( Node *& x ) {
 	//Check if both children are not null
 	if(leftChild != NULL && rightChild != NULL){
 		//check if the difference in height between the left and right children are greater than 1
-		if((leftChild->height - rightChild-height) > 1 || (rightChild->height - leftChild->height) > 1){
+		if((leftChild->height - rightChild->height) > 1 || (rightChild->height - leftChild->height) > 1){
 			if(leftChild->height > rightChild->height){
 				//left Child has the higher height 
+				//case L
+				if(leftChild->right == NULL){
+					//case LL
+					rotateRight(x);
+				} else {
+					//case LR
+					doubleRotateRight(x);
+				}
 
 			} else {
 				if(leftChild->height < rightChild->height){
 					//right 
-
+					if(rightChild->right == NULL){
+						//case RL
+						doubleRotateLeft(x);
+					} else {
+						//case RR
+						rotateLeft(x);
+					}
 				}
 			}
 		}
@@ -203,7 +217,7 @@ void balance( Node *& x ) {
 				doubleRotateLeft(x);
 			} else {
 				//case RR
-				doubleRotateLeft(x);
+				rotateLeft(x);
 			}
 			//
 		} else{
