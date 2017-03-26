@@ -98,7 +98,7 @@ void rotateLeft( Node *& root ) {
   }
   assert(root->right != NULL); // ditto 
   // --------
-  // std::cout << "rotateLeft: root->key = " << root->key << std::endl;
+  std::cout << "rotateLeft: root->key = " << root->key << std::endl;
   // --------  
   Node * temp = root->right;
   root->right = temp->left;
@@ -122,7 +122,7 @@ void rotateRight( Node *& root ) {
   }
   assert(root->left != NULL); // ditto 
   // --------
-  // std::cout << "rotateRight: root->key = " << root->key << std::endl; 
+  std::cout << "rotateRight: root->key = " << root->key << std::endl; 
   // --------
   Node * temp = root->left;
   root->left = temp->right;
@@ -140,7 +140,7 @@ void doubleRotateLeft( Node *& a ) {
   }
   assert(a != NULL); // not wrapped in else-body (so: no doubt it happens)
   // --------
-  // std::cout << "doubleRotateLeft: a->key = " << a->key << std::endl; 
+  std::cout << "doubleRotateLeft: a->key = " << a->key << std::endl; 
   // --------
   rotateRight(a->right);
   rotateLeft(a);
@@ -154,7 +154,7 @@ void doubleRotateRight( Node *& a ) {
   }
   assert(a != NULL);
   // --------
-  // std::cout << "doubleRotateRight: a->key = " << a->key << std::endl; 
+  std::cout << "doubleRotateRight: a->key = " << a->key << std::endl; 
   // --------
   rotateLeft(a->left);
   rotateRight(a);
@@ -168,7 +168,64 @@ void doubleRotateRight( Node *& a ) {
   // or doubleRotateRight, whichever is appropriate.
   //
 void balance( Node *& x ) {
-	//TODO: write this function  
+	Node * leftChild = x->left;
+	Node * rightChild = x->right;
+
+	//Check if both children are not null
+	if(leftChild != NULL && rightChild != NULL){
+		//check if the difference in height between the left and right children are greater than 1
+		if((leftChild->height - rightChild->height) > 1 || (rightChild->height - leftChild->height) > 1){
+			if(leftChild->height > rightChild->height){
+				//left Child has the higher height 
+				//case L
+				if(leftChild->right == NULL){
+					//case LL
+					rotateRight(x);
+				} else {
+					//case LR
+					doubleRotateRight(x);
+				}
+
+			} else {
+				if(leftChild->height < rightChild->height){
+					//right 
+					if(rightChild->right == NULL){
+						//case RL
+						rotateLeft(x); //doubleRotateLeft(x);
+					} else {
+						//case RR
+						doubleRotateLeft(x); //rotateLeft(x);
+					}
+				}
+			}
+		}
+	} else{
+		//check if it is the right child that is null 
+		if(rightChild == NULL && x->height > 1){
+			if(leftChild->right == NULL){
+				//case LL
+				rotateRight(x);
+			} else {
+				//case LR
+				doubleRotateRight(x);
+			}
+
+			//check if it is the right child that is null
+		} else if(leftChild == NULL && x->height > 1) {
+			if(rightChild->right == NULL){
+				//case RL
+				doubleRotateLeft(x);
+			} else {
+				//case RR
+				rotateLeft(x);
+			}
+			//
+		} else{
+			//the tree is balanced
+			return;
+		}
+
+	}
 }
 
 // ********** DO NOT CHANGE BELOW HERE ****************
