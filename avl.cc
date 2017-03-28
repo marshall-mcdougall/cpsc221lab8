@@ -191,10 +191,10 @@ void balance( Node *& x ) {
 					//right 
 					if(rightChild->right == NULL){
 						//case RL
-						doubleRotateLeft(x);
+						rotateLeft(x); //doubleRotateLeft(x);
 					} else {
 						//case RR
-						rotateLeft(x);
+						doubleRotateLeft(x); //rotateLeft(x);
 					}
 				}
 			}
